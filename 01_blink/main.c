@@ -1,11 +1,5 @@
 #include "rpi_lib/rpi.h"
-
-#define GPFSEL1     0x20200004
-#define GPSET0      0x2020001C
-#define GPCLR0      0x20200028
-
-#define SYST_CLO    0x20003004
-#define SYST_CHI    0x20003008
+#include "rpi_lib/peripherals/rpi_peripherals.h"
 
 volatile unsigned long long get_systime(void)
 {
@@ -13,13 +7,13 @@ volatile unsigned long long get_systime(void)
     unsigned int chi;
     unsigned int clo;
 
-    chi = *(volatile unsigned int *)SYST_CHI;
-    clo = *(volatile unsigned int *)SYST_CLO;
+    chi = *SYST_CHI;
+    clo = *SYST_CLO;
 
-    if(chi != *(volatile unsigned int *)SYST_CHI)
+    if(chi != *SYST_CHI)
     {
-        chi = *(volatile unsigned int *)SYST_CHI;
-        clo = *(volatile unsigned int *)SYST_CLO;
+        chi = *SYST_CHI;
+        clo = *SYST_CLO;
     }
 
     t = chi;
@@ -45,17 +39,17 @@ int main(void){
     rpi_init();
 
     // outputに設定
-    *(volatile unsigned int *)GPFSEL1 |= 0x01 << (3*6);
+    *GPIO_GPFSEL1 |= 0x01 << (3*6);
 
     while(1)
     {
         // LED点灯
-        *(volatile unsigned int *)GPCLR0 |= 0x01 << 16;
+        *GPIO_GPCLR0 |= 0x01 << 16;
         
         delay_ms(3000);
         
         // LED消灯
-        *(volatile unsigned int *)GPSET0 |= 0x01 << 16;
+        *GPIO_GPSET0 |= 0x01 << 16;
         
         delay_ms(3000);
     }
