@@ -7,7 +7,9 @@ OBJCOPY= $(CROSS)objcopy
 STARTUP= startup.o
 OBJS= main.o
 
-OBJS+= rpi_lib/rpi_init.o rpi_lib/bss/clearbss.o
+OBJS+= rpi_lib/rpi_init.o
+OBJS+= rpi_lib/bss/clearbss.o
+OBJS+= rpi_lib/gpio/rpi_gpio.o
 
 CFLAGS = -mfloat-abi=soft -mlittle-endian
 CFLAGS+= -nostdinc -fno-builtin

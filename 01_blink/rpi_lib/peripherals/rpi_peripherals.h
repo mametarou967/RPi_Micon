@@ -1,3 +1,6 @@
+#ifndef RPILIB_PERIPHERALS_H
+#define RPILIB_PERIPHERALS_H
+
 #include "../rpi_type.h"
 
 #define PHY_PERI_ADDR(x)        (0x20000000 + (x))
@@ -16,6 +19,12 @@
 //reserved
 #define GPIO_GPCLR0             ((vu32_t *)PHY_PERI_ADDR(GPIO_BASE + 0x28))
 #define GPIO_GPCLR1             ((vu32_t *)PHY_PERI_ADDR(GPIO_BASE + 0x2C))
+//...
+
+#define GPIO_GPPUD              ((vu32_t *)PHY_PERI_ADDR(GPIO_BASE + 0x94))
+#define GPIO_GPPUDCLK0          ((vu32_t *)PHY_PERI_ADDR(GPIO_BASE + 0x98))
+#define GPIO_GPPUDCLK1          ((vu32_t *)PHY_PERI_ADDR(GPIO_BASE + 0x9C))
+
 
 // timer
 #define SYST_BASE               (0x00003000)
@@ -26,3 +35,5 @@
 #define SYST_C1                ((vu32_t *)PHY_PERI_ADDR(SYST_BASE + 0x10))
 #define SYST_C2                ((vu32_t *)PHY_PERI_ADDR(SYST_BASE + 0x14))
 #define SYST_C3                ((vu32_t *)PHY_PERI_ADDR(SYST_BASE + 0x18))
+
+#endif

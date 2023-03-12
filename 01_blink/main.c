@@ -1,5 +1,6 @@
 #include "rpi_lib/rpi.h"
 #include "rpi_lib/peripherals/rpi_peripherals.h"
+#include "rpi_lib/gpio/rpi_gpio.h"
 
 volatile unsigned long long get_systime(void)
 {
@@ -39,7 +40,8 @@ int main(void){
     rpi_init();
 
     // outputに設定
-    *GPIO_GPFSEL1 |= 0x01 << (3*6);
+    // *GPIO_GPFSEL1 |= 0x01 << (3*6);
+    pinMode(16, PIN_MODE_OUTPUT);
 
     while(1)
     {
