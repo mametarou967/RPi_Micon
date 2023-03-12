@@ -1,5 +1,12 @@
 ## 環境作成方法
 
+### 作成環境
+
+* Windows 10 Home
+* wsl:Ubuntu-18.04
+
+### crosstool-ngのインストール方法
+
 ```
 > mkdir -p ~/cross/rpi
 > mkdir ~/cross/src
@@ -13,7 +20,7 @@
 > sudo make install
 ```
 
-## automakeとautoconf
+### automakeとautoconf
 
 上記の環境作成時にautomakeとautoconfが最新でないため、エラーになってしまうことがある。
 この場合は`apt-get`でインストール済の2つをアンインストールして、最新版を入れなおす。
