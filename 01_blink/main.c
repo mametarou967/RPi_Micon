@@ -46,12 +46,14 @@ int main(void){
     while(1)
     {
         // LED点灯
-        *GPIO_GPCLR0 |= 0x01 << 16;
+        digitalWrite(16,PIN_VALUE_LOW);
+        // *GPIO_GPCLR0 |= 0x01 << 16;
         
         delay_ms(3000);
         
         // LED消灯
-        *GPIO_GPSET0 |= 0x01 << 16;
+        digitalWrite(16,PIN_VALUE_HIGH);
+        //*GPIO_GPSET0 |= 0x01 << 16;
         
         delay_ms(3000);
     }

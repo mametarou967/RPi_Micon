@@ -76,9 +76,22 @@ void pinMode(int pin, PIN_MODE pinMode)
     return ;
 }
 
-void digitalWrite(int pin,PIN_VALUE pinValule)
+void digitalWrite(int pin,PIN_VALUE pinValue)
 {
+    int writeValue = 0;
+    if(pin > PIN_INDEX_MAX) return;
 
+    if(pinValue == PIN_VALUE_HIGH)
+    {
+        if(pin < 32) *GPIO_GPSET0 |= 0x01 << pin;
+        else *GPIO_GPSET1 |= 0x01 << (pin >> 5);
+    }
+    else
+    {
+        if(pin < 32) *GPIO_GPCLR0 |= 0x01 << pin;
+        else *GPIO_GPCLR1 |= 0x01 << (pin >> 5);
+    }
+    return ;
 }
 
 int digitalRead(int pin)
