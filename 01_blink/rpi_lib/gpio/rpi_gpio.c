@@ -23,6 +23,7 @@ void pinMode(int pin, PIN_MODE pinMode)
     int dataIndex = 0;
     unsigned int writeData = 0;
     // pinの値が範囲外の時は何もしない
+    if(pin > PIN_INDEX_MAX) return;
 
     // 書き込み先のレジスタを求める
     gpio_gpfsel = gpfselAddr(pin);
@@ -94,9 +95,19 @@ void digitalWrite(int pin,PIN_VALUE pinValue)
     return ;
 }
 
-int digitalRead(int pin)
+PIN_VALUE digitalRead(int pin)
 {
+    unsigned int value = 0;
+    PIN_VALUE pinValue = PIN_VALUE_LOW;
+    if(pin > PIN_INDEX_MAX) return pinValue;
 
+    if(pin < 32) value = (*GPIO_GPLEV0 >> pin) & 0x1;
+    else value = (*GPIO_GPLEV1 >> (pin >> 5)) & 0x1;
+
+    if(value == 0) pinValue = PIN_VALUE_LOW;
+    else return pinValue = PIN_VALUE_HIGH;
+
+    return pinValue;
 }
 
 

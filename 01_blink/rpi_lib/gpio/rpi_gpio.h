@@ -25,6 +25,6 @@ typedef enum _PIN_VALUE
 
 void pinMode(int pin, PIN_MODE pinMode);
 void digitalWrite(int pin,PIN_VALUE pinValule);
-int digitalRead(int pin);
+PIN_VALUE digitalRead(int pin);
 
 #endif

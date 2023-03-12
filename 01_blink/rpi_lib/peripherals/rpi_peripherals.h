@@ -20,6 +20,8 @@
 #define GPIO_GPCLR0             ((vu32_t *)PHY_PERI_ADDR(GPIO_BASE + 0x28))
 #define GPIO_GPCLR1             ((vu32_t *)PHY_PERI_ADDR(GPIO_BASE + 0x2C))
 //...
+#define GPIO_GPLEV0             ((vu32_t *)PHY_PERI_ADDR(GPIO_BASE + 0x34))
+#define GPIO_GPLEV1             ((vu32_t *)PHY_PERI_ADDR(GPIO_BASE + 0x38))
 
 #define GPIO_GPPUD              ((vu32_t *)PHY_PERI_ADDR(GPIO_BASE + 0x94))
 #define GPIO_GPPUDCLK0          ((vu32_t *)PHY_PERI_ADDR(GPIO_BASE + 0x98))
