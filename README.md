@@ -43,3 +43,18 @@ tar xvf automake-1.16.5.tar
 make
 make install
 ```
+
+## uartについて
+
+* config.txtに以下の文字を入れる
+* imgファイルの前にuartの有効化とボーレートとクロックを指定しておく
+(※資料執筆当初は何もなくても300MHzだった可能性があるが、raspberry piのosのバージョンが上がり、初期値が変わった可能性がある)
+
+```
+enable_uart=1
+init_uart_baud=115200
+init_uart_clock=3000000
+kernel=rpi-micon.img
+```
+
+* \\wsl.localhost\Ubuntu-18.04\home\mametarou963\RPi_Micon\master\02_UART\uartechoTest01\rpi-micon.img
