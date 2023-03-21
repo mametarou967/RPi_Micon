@@ -27,11 +27,12 @@ int main(void){
         receive_index = 0;
         do{
             // 受信が有効にならない間は待機
-            while(!Serial_available());
-
-            c = *UART0_DR;
-            buf[receive_index] = 0xff & c;
-            receive_index++;
+            c = Serial_read();
+            if(c != -1){
+                // 正しく受信できた場合
+                buf[receive_index] = 0xff & c;
+                receive_index++;
+            }
             if(receive_index > BUF_SIZE) break;
         }while(c != 0x0a );
 
