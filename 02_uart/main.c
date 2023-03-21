@@ -8,6 +8,7 @@
 // UART peripheral
 #define UART0_BASE      0x00201000
 #define UART0_DR         ((vu32_t *)PHY_PERI_ADDR(UART0_BASE + 0x00))
+#define UART0_FR         ((vu32_t *)PHY_PERI_ADDR(UART0_BASE + 0x18))
 #define UART0_IBRD       ((vu32_t *)PHY_PERI_ADDR(UART0_BASE + 0x24))
 #define UART0_FBRD       ((vu32_t *)PHY_PERI_ADDR(UART0_BASE + 0x28))
 #define UART0_LCRH       ((vu32_t *)PHY_PERI_ADDR(UART0_BASE + 0x2C))
@@ -37,10 +38,14 @@ int main(void){
     // RXE en TXE en UART en
     *UART0_CR = 0x0301;
 
+    int c;
     while(1)
     {
-        delay(1000);
-        *UART0_DR = 0x00ff & 'a';
+        while(*UART0_FR & (1 << 4));
+
+        c = *UART0_DR;
+
+        *UART0_DR = 0x00ff & c;
     }
 
     return 0;
