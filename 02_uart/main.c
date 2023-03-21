@@ -14,6 +14,7 @@
 #define UART0_LCRH       ((vu32_t *)PHY_PERI_ADDR(UART0_BASE + 0x2C))
 #define UART0_CR         ((vu32_t *)PHY_PERI_ADDR(UART0_BASE + 0x30))
 
+#define BUF_SIZE        256
 
 int main(void){
 
@@ -39,13 +40,34 @@ int main(void){
     *UART0_CR = 0x0301;
 
     int c;
+    char buf[BUF_SIZE];
+    int send_index = 0;
+    int receive_index = 0;
+    
     while(1)
     {
-        while(*UART0_FR & (1 << 4));
+        // 受信フェーズ
+        for(receive_index = 0;receive_index < BUF_SIZE;receive_index++)
+            buf[receive_index] = 0;
+        c = 0;
+        receive_index = 0;
+        do{
+            while(*UART0_FR & (1 << 4));
+            c = *UART0_DR;
+            buf[receive_index] = 0xff & c;
+            receive_index++;
+            if(receive_index > BUF_SIZE) break;
+        }while(c != 0x0a );
 
-        c = *UART0_DR;
-
-        *UART0_DR = 0x00ff & c;
+        // 送信フェーズ
+        send_index = 0;
+        while(buf[send_index] != '\0')
+        {
+            // 送信FIFOの満タンが解除されるまで待つ
+            while(*UART0_FR & (1 << 5));
+            *UART0_DR = buf[send_index];
+            send_index++;
+        }
     }
 
     return 0;
