@@ -49,10 +49,25 @@ int Serial_begin(int baudrate)
     return 0;
 }
 
+void Serial_end()
+{
+    // UARTの無効化
+    *UART0_CR = 0;
+    pinMode(14, PIN_MODE_INPUT);
+    pinMode(15, PIN_MODE_INPUT);
 
+    return ;
+}
+
+// 受信データが存在する場合は1
+// 受信データが存在しない場合は0
+int Serial_available(void)
+{
+    // 5bit目 RXFE 受信FIFOが空の時に1になる
+    if(*UART0_FR & (1 << 4)) return 0;
+    else return 1;
+}
 /*
-void Serial_end();
-int Serial_available(void);
 int Serial_write(char *buf,int len);
 int Serial_read(void);
 void setSerialTimeout(int read_ms,int write_ms)

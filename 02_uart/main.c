@@ -26,7 +26,9 @@ int main(void){
         c = 0;
         receive_index = 0;
         do{
-            while(*UART0_FR & (1 << 4));
+            // 受信が有効にならない間は待機
+            while(!Serial_available());
+
             c = *UART0_DR;
             buf[receive_index] = 0xff & c;
             receive_index++;
