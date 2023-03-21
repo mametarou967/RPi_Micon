@@ -12,6 +12,7 @@ OBJS+= rpi_lib/bss/clearbss.o
 OBJS+= rpi_lib/gpio/gpio.o
 OBJS+= rpi_lib/timer/timer.o
 OBJS+= rpi_lib/delay/delay.o
+OBJS+= rpi_lib/uart/uart.o
 
 CFLAGS = -mfloat-abi=soft -mlittle-endian
 CFLAGS+= -nostdinc -fno-builtin
