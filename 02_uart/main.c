@@ -37,14 +37,7 @@ int main(void){
         }while(c != 0x0a );
 
         // 送信フェーズ
-        send_index = 0;
-        while(buf[send_index] != '\0')
-        {
-            // 送信FIFOの満タンが解除されるまで待つ
-            while(*UART0_FR & (1 << 5));
-            *UART0_DR = buf[send_index];
-            send_index++;
-        }
+        uart0_puts(buf);
     }
 
     return 0;

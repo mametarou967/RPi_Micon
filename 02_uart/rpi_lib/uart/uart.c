@@ -148,6 +148,77 @@ void setSerialTimeout(int read_ms,int write_ms)
     return;
 }
 
+
+int uart0_putc(int c)
+{
+    unsigned long long startMills;
+    startMills = millis();
+    
+    while(1)
+    {
+        if(*UART0_FR & (1 << 5))
+        {
+            // 送信バッファが満タン
+
+            // 送信タイムアウトが設定されている場合は評価
+            if((millis() - startMills) > readTimeoutMs)
+            {
+                // タイムアウトしたので終了
+                return -1;
+            }
+        }
+        else
+        {
+            // 送信バッファが満タンでない
+
+            // 文字列送信
+            *UART0_DR = 0xff & c;
+
+            return 1;
+        }
+    }
+}
+
+int uart0_puts(char *s)
+{
+    char send_c = '\0';
+    int send_index = 0;
+    int putc_result = 0;
+    int result = 0;
+    while(1)
+    {
+        // 送信
+        send_c = *(s + send_index);
+        putc_result = uart0_putc((int)send_c);
+
+        // タイムアウトで失敗した場合は終了
+        if(putc_result == -1)
+        {
+            result = -1;
+            break;
+        }
+
+        // 送信した値が改行かナル文字ならば終了
+        if(send_c == 0xa || send_c == '\0')
+        {
+            result = send_index + 1;
+            break;
+        }
+
+        // インデックス更新
+        send_index++;
+    }
+
+    return result;
+}
+
+char *uart0_gets(char *s,int len)
+{
+    char hello[] = "hello";
+    char *hello_pt = &hello[0];
+
+    return hello_pt;
+}
 /*
 int Serial_write(char *buf,int len);
 int Serial_read(void);
