@@ -214,13 +214,43 @@ int uart0_puts(char *s)
 
 char *uart0_gets(char *s,int len)
 {
-    char hello[] = "hello";
-    char *hello_pt = &hello[0];
+    int c = 0;
+    int buf_index = 0;
+    char *result;
 
-    return hello_pt;
+    while(1)
+    {
+        // 受信する文字列長さより大きい場合は読み込み終了
+        if(len <= buf_index)
+        {
+            result = s;
+            break;
+        }
+
+        // 一文字読み込む
+        c = Serial_read();
+        
+        if(c == -1)
+        {
+            // タイムアウトした場合、読み込みを終了
+            result = (void *)0;
+            break;
+        }
+        else
+        {
+            // 文字が読み込めた場合、bufferに格納
+            *(s + buf_index) = 0xff & c;
+        }
+
+        // 改行かナル文字の場合読み込みを終了
+        if((c == 0xa) || (c == '\0'))
+        {
+            result = s;
+            break;
+        }
+
+        buf_index++;
+    }
+
+    return result;
 }
-/*
-int Serial_write(char *buf,int len);
-int Serial_read(void);
-int uart0_putc(int c);
-*/
