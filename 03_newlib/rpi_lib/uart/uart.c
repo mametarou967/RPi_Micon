@@ -212,6 +212,14 @@ int uart0_puts(char *s)
     return result;
 }
 
+char uart0_getc()
+{
+    int readValue;
+    readValue = Serial_read();
+    if(readValue == -1) return (char)0;
+    return (char)(readValue & 0xff);
+}
+
 char *uart0_gets(char *s,int len)
 {
     int c = 0;

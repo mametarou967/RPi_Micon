@@ -13,15 +13,21 @@ OBJS+= rpi_lib/gpio/gpio.o
 OBJS+= rpi_lib/timer/timer.o
 OBJS+= rpi_lib/delay/delay.o
 OBJS+= rpi_lib/uart/uart.o
+OBJS+= syscall.o
 
 CFLAGS = -mfloat-abi=soft -mlittle-endian
-CFLAGS+= -nostdinc -fno-builtin
+CFLAGS+= -fno-builtin
 CFLAGS+= -O0
+CFLAGS+= -nostartfiles
+CFLAGS+= -nodefaultlibs
+
+LIBS = -L/home/mametarou963/cross/rpi/arm-unknown-eabi/lib/gcc/arm-unknown-eabi/12.2.0
+LIBS+= -L/home/mametarou963/cross/rpi/arm-unknown-eabi/arm-unknown-eabi/lib
 
 all:	rpi-micon.img
 
 rpi-micon.elf:	$(STARTUP) $(OBJS)
-	$(LD) -static -nostdlib -T rpiMicon.lds $^ `$(CC) -print-libgcc-file-name` -o $@
+	$(LD) -static -T rpiMicon.lds $^ -o $@ $(LIBS) -lc -lgcc
 
 .SUFFIXES: .elf .img
 
