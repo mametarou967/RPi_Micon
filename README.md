@@ -57,4 +57,15 @@ init_uart_clock=3000000
 kernel=rpi-micon.img
 ```
 
+## spiについて
+
+* config.txtに以下の行を有効にする
+
+```
+dtparam=spi=on
+```
+
+
+
+
 * \\wsl.localhost\Ubuntu-18.04\home\mametarou963\RPi_Micon\master\02_UART\uartechoTest01\rpi-micon.img
