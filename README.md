@@ -65,7 +65,10 @@ kernel=rpi-micon.img
 dtparam=spi=on
 ```
 
+## i2cについて
 
+*config.txtに以下の行を追加する
 
-
-* \\wsl.localhost\Ubuntu-18.04\home\mametarou963\RPi_Micon\master\02_UART\uartechoTest01\rpi-micon.img
+```
+dtparam=i2c_arm=on
+```
